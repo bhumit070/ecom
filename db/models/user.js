@@ -9,8 +9,17 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
       unique: true,
     },
+    gender: {
+      type: Sequelize.ENUM('male', 'female', 'other'),
+      allowNull: false,
+    },
     password: {
       type: Sequelize.STRING,
+      allowNull: false,
+    },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      default: false,
       allowNull: false,
     },
   });

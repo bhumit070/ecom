@@ -58,3 +58,8 @@ exports.isAuthenticated = (req, res, next) => {
   if (data.id === req.user.id) next();
   else return accessDenied('access denied');
 };
+
+exports.isAdmin = (req, res, next) => {
+  if (user.isAdmin) next();
+  return accessDenied('Only admins are allowed to view this route');
+};
