@@ -11,6 +11,8 @@ const categoryRoutes = require('./routes/category/category');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+console.log('DIRNAME', __dirname);
+app.use('/images', express.static(__dirname + '/public/images'));
 app.use(cookieParser());
 app.use(
   cors({
@@ -21,6 +23,9 @@ app.use(
 const apiPrefix = '/api';
 app.use(apiPrefix, authRoutes);
 app.use(apiPrefix, categoryRoutes);
+app.use((req, res) =>
+  res.status(404).json({ isError: true, msg: 'Api not found' }),
+);
 
 db.sequelize
   .sync({ alter: true })
