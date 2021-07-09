@@ -1,13 +1,8 @@
 const router = require('express').Router();
-const {
-  login,
-  register,
-  isSignedIn,
-  isAuthenticated,
-} = require('../../controllers/auth/auth');
+const { login, register } = require('../../controllers/auth/auth');
 const { getUserById } = require('../../controllers/user/user');
 
-const { checkValidInput, isErrorInInput } = require('../../utils/validate');
+const { checkValidInput, isErrorInput } = require('../../utils/validate');
 
 router.param('userId', getUserById);
 
@@ -17,7 +12,7 @@ router.post(
   checkValidInput('email'),
   checkValidInput('gender'),
   checkValidInput('password'),
-  isErrorInInput,
+  isErrorInput,
   register,
 );
 
@@ -25,7 +20,7 @@ router.post(
   '/auth/login',
   checkValidInput('email'),
   checkValidInput('password'),
-  isErrorInInput,
+  isErrorInput,
   login,
 );
 

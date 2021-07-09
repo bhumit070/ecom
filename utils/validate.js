@@ -21,10 +21,12 @@ const checkValidInput = (inputType) => {
         'password',
         'Please Enter Alphanumeric Password With Greater then 5 characters',
       ).isLength({ min: 5 });
+    case 'category':
+      return check('category', 'Please enter category name').notEmpty();
   }
 };
 
-const isErrorInInput = (req, res, next) => {
+const isErrorInput = (req, res, next) => {
   const { errors } = validationResult(req);
   if (errors.length > 0) {
     return unProcessableEntity(res, errors[0].msg);
@@ -34,5 +36,5 @@ const isErrorInInput = (req, res, next) => {
 
 module.exports = {
   checkValidInput,
-  isErrorInInput,
+  isErrorInput,
 };

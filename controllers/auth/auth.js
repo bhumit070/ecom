@@ -64,12 +64,12 @@ exports.isSignedIn = (req, res, next) => {
 exports.isAuthenticated = (req, res, next) => {
   const { token } = req.cookies;
   const data = jwt.decode(token);
-  console.log('sdgw', data.id === req.user.id);
   if (data.id === req.user.id) next();
-  else return accessDenied('access denied');
+  else return accessDenied(res, 'access denied');
 };
 
 exports.isAdmin = (req, res, next) => {
-  if (user.isAdmin) next();
-  return accessDenied('Only admins are allowed to view this route');
+  const user = req.user;
+  if (user.isAdmin) return next();
+  return accessDenied(res, 'Only admins are allowed to view this route');
 };

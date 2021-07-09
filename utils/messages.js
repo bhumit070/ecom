@@ -20,7 +20,7 @@ exports.badRequest = (res, msg) => {
   });
 };
 
-exports.serverError = (res, msg) => {
+exports.serverError = (res, msg = 'Server error.') => {
   return res.status(500).json({
     isError: true,
     msg,
@@ -36,6 +36,13 @@ exports.unAuthenticated = (res, msg) => {
 
 exports.accessDenied = (res, msg) => {
   return res.status(403).json({
+    isError: true,
+    msg,
+  });
+};
+
+exports.notFound = (res, msg) => {
+  return res.status(404).json({
     isError: true,
     msg,
   });
