@@ -7,6 +7,7 @@ const app = express();
 const db = require('./db/index');
 
 const authRoutes = require('./routes/auth/auth');
+const categoryRoutes = require('./routes/category/category');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ app.use(
 
 const apiPrefix = '/api';
 app.use(apiPrefix, authRoutes);
+app.use(apiPrefix, categoryRoutes);
 
 db.sequelize
   .sync({ alter: true })
