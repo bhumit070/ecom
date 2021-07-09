@@ -23,7 +23,14 @@ exports.login = async (req, res) => {
           expire: new Date() + 1,
           path: process.env.FRONTEND,
         });
-        return okMessage(res, 'Signin Successful', { token });
+        delete user.dataValues.password;
+        delete user.dataValues.createdAt;
+        delete user.dataValues.updatedAt;
+        const payload = {
+          token,
+          user,
+        };
+        return okMessage(res, 'Signin Successful', payload);
       } else return badRequest(res, 'Password is not Valid');
     } else return badRequest(res, 'No user found with given email');
   } catch (error) {
@@ -39,7 +46,10 @@ exports.register = async (req, res) => {
     password = bcrypt.hashSync(password, 10);
     req.body.password = password;
     const data = await User.create(req.body);
-    return okMessage(res, data);
+    delete user.dataValues.password;
+    delete user.dataValues.createdAt;
+    delete user.dataValues.updatedAt;
+    return okMessage(res, 'Register Successful', data);
   } catch (error) {
     return res.status(500).json(error);
   }

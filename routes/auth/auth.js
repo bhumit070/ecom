@@ -15,6 +15,7 @@ router.post(
   '/auth/register',
   checkValidInput('name'),
   checkValidInput('email'),
+  checkValidInput('gender'),
   checkValidInput('password'),
   isErrorInInput,
   register,
@@ -24,11 +25,8 @@ router.post(
   '/auth/login',
   checkValidInput('email'),
   checkValidInput('password'),
+  isErrorInInput,
   login,
-);
-
-router.get('/protected/:userId', isSignedIn, isAuthenticated, (req, res) =>
-  res.status(200).json('ok'),
 );
 
 module.exports = router;

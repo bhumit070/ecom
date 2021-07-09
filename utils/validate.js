@@ -11,6 +11,11 @@ const checkValidInput = (inputType) => {
         'name',
         'Please Enter Name with greater then 2 characters',
       ).isLength({ min: 3 });
+    case 'gender':
+      return check('gender', 'Please enter valid gender').equals(
+        'male' || 'female',
+      );
+
     case 'password':
       return check(
         'password',
