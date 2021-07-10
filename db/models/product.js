@@ -28,6 +28,11 @@ module.exports = (sequelize, Sequelize) => {
         this.setDataValue('photo', JSON.stringify(value));
       },
     },
+    isOutOfStock: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0,
+    },
   });
   return Product;
 };
