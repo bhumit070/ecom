@@ -28,10 +28,6 @@ module.exports = (sequelize, Sequelize) => {
         this.setDataValue('photo', JSON.stringify(value));
       },
     },
-    category: {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-    },
   });
   return Product;
 };
