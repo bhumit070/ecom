@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/auth/auth');
 const categoryRoutes = require('./routes/category/category');
 const productRoutes = require('./routes/product/product');
-
+const cartRoutes = require('./routes/cart/cart');
 //importing database instance
 const db = require('./db/index');
 
@@ -31,6 +31,7 @@ const apiPrefix = '/api';
 app.use(apiPrefix, authRoutes);
 app.use(apiPrefix, categoryRoutes);
 app.use(apiPrefix, productRoutes);
+app.use(apiPrefix, cartRoutes);
 app.use((req, res) =>
   res.status(404).json({ isError: true, msg: 'Api not found' }),
 );
