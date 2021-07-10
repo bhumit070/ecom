@@ -1,5 +1,6 @@
 const formidable = require('formidable');
 const Product = require('../../db/index').product;
+const db = require('../../db/index');
 const {
   notFound,
   badRequest,
@@ -31,7 +32,9 @@ const fileUpload = (file) => {
 };
 
 exports.getProductById = async (req, res, next, id) => {
-  const product = await Product.findByPk(parseInt(id));
+  const product = await Product.findByPk(parseInt(id), {
+    include: [{ model: db.category }],
+  });
   if (product) {
     req.product = product;
     return next();
@@ -48,14 +51,14 @@ exports.createProduct = (req, res) => {
       if (!file.img || !fields)
         return badRequest(res, 'Please include product image');
 
-      const { title, description, amount, category } = fields;
+      const { title, description, amount, category: categoryId } = fields;
 
       //checking required files
       if (!title) return badRequest(res, 'Please Enter product title');
       if (!description)
         return badRequest(res, 'Please Enter product description');
       if (!amount) return badRequest(res, 'Please Enter product amount');
-      if (!category) return badRequest(res, 'Please Enter product category');
+      if (!categoryId) return badRequest(res, 'Please Enter product category');
 
       // file upload process
       const [photo, error] = fileUpload(file);
@@ -65,20 +68,23 @@ exports.createProduct = (req, res) => {
         title,
         description,
         amount,
-        category,
+        categoryId,
         photo,
       };
 
       const data = await Product.create(product);
       return res.status(200).json(data);
     } catch (error) {
+      console.log('ERROR IS', error);
       return serverError(res);
     }
   });
 };
 
 exports.getAllProducts = async (req, res) => {
-  const data = await Product.findAll();
+  const data = await Product.findAll({
+    include: [{ model: db.category }],
+  });
   return res.status(200).json(data);
 };
 
