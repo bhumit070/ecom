@@ -13,8 +13,20 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false,
     },
     photo: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
+      get() {
+        const value = this.getDataValue('photo');
+        return value
+          ? JSON.parse(value)
+          : {
+              name: '',
+              path: '',
+            };
+      },
+      set(value) {
+        this.setDataValue('photo', JSON.stringify(value));
+      },
     },
     category: {
       type: Sequelize.INTEGER,
