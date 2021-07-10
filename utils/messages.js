@@ -41,7 +41,7 @@ exports.accessDenied = (res, msg) => {
   });
 };
 
-exports.notFound = (res, msg) => {
+exports.notFound = (res, msg = 'Requested resource not found') => {
   return res.status(404).json({
     isError: true,
     msg,

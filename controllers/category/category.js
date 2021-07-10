@@ -10,7 +10,6 @@ exports.getCategoryById = async (req, res, next, id) => {
       return notFound(res, 'Requested category not found');
     }
   } catch (error) {
-    console.log(error);
     return serverError(res);
   }
 };
