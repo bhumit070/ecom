@@ -46,9 +46,9 @@ exports.register = async (req, res) => {
     password = bcrypt.hashSync(password, 10);
     req.body.password = password;
     const data = await User.create(req.body);
-    delete user.dataValues.password;
-    delete user.dataValues.createdAt;
-    delete user.dataValues.updatedAt;
+    delete data.dataValues.password;
+    delete data.dataValues.createdAt;
+    delete data.dataValues.updatedAt;
     return okMessage(res, 'Register Successful', data);
   } catch (error) {
     return res.status(500).json(error);
